@@ -98,7 +98,7 @@ export default function ProfilePage() {
       <div className="max-w-3xl">
         <div className="flex items-end justify-between gap-4">
           <div>
-            <h1 className="text-2xl md:text-3xl font-bold tracking-tight">Profile</h1>
+            <h1 className="text-2xl md:text-3xl font-bold tracking-tight">Profil</h1>
             <p className="text-zinc-500 text-sm mt-1">Ism va kun rejimini sozlang (tongni boshlash / tugatish).</p>
           </div>
           <button
@@ -121,7 +121,7 @@ export default function ProfilePage() {
               placeholder={fallbackName}
               className="mt-2 w-full bg-transparent text-lg font-semibold outline-none border-b border-white/10 focus:border-emerald-500/60 pb-2"
             />
-            <div className="text-xs text-zinc-500 mt-2">Dashboard’da shu ism bilan ko‘rinadi.</div>
+            <div className="text-xs text-zinc-500 mt-2">Bosh sahifada shu ism bilan ko‘rinadi.</div>
           </div>
 
           <div className="rounded-2xl border border-white/10 bg-white/5 p-5">

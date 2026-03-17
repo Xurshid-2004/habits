@@ -320,7 +320,7 @@ const Habits = () => {
     <ErrorBoundary>
       <div className="min-h-screen bg-black text-white p-6 pb-24">
         <header className="flex justify-between items-center mb-8">
-          <h1 className="text-2xl font-bold tracking-tight">Barcha yo&apos;llar</h1>
+          <h1 className="text-2xl font-bold tracking-tight">Odatlar</h1>
         </header>
 
         <div className="grid grid-cols-2 gap-4">
@@ -442,7 +442,7 @@ const Habits = () => {
                         </button>
                       </div>
 
-                      {/* Name Input */}
+                      {/* Ism kiritish */}
                       <div className="p-4 bg-zinc-900/50 rounded-2xl border border-zinc-800">
                         <label className="text-[10px] text-zinc-500 uppercase font-bold tracking-widest mb-1 block">Odat nomi</label>
                         <input

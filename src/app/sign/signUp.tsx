@@ -22,10 +22,10 @@ const SignUp = ({ onSignInClick }: SignUpProps) => {
         email: formData.email,
         password: formData.password,
       });
-      alert("royxatdan o'tdingiz")
+      alert("Muvaffaqiyatli ro'yxatdan o'tdingiz!")
     } catch (error: unknown) {
       const message = error instanceof Error ? error.message : String(error);
-      alert("Xatolik:" + message)
+      alert("Xatolik: " + message)
     }
   };
 
@@ -39,7 +39,7 @@ const SignUp = ({ onSignInClick }: SignUpProps) => {
 
   const handleGoogleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Google sign-in started...');
+    console.log('Google orqali kirish boshlandi...');
     
     try {
       const { data, error } = await supabase.auth.signInWithOAuth({
@@ -53,14 +53,14 @@ const SignUp = ({ onSignInClick }: SignUpProps) => {
       
       if (error) {
         console.error('Google OAuth error:', error);
-        alert("Google bilan kirishda xatolik: " + error.message);
+        alert("Google orqali kirishda xatolik: " + error.message);
       } else {
-        console.log('Redirecting to Google...');
+        console.log("Google sahifasiga yo'naltirilmoqda...");
       }
     } catch (error: unknown) {
       console.error('Google sign-in error:', error);
       const message = error instanceof Error ? error.message : String(error);
-      alert("Google bilan kirishda xatolik: " + message);
+      alert("Google orqali kirishda xatolik: " + message);
     }
   };
 
@@ -79,17 +79,18 @@ const SignUp = ({ onSignInClick }: SignUpProps) => {
             </svg>
           </div>
           <h1 className="text-2xl font-bold text-gray-800 tracking-tight">
-Create Account</h1>
+            Ro&apos;yxatdan o&apos;tish
+          </h1>
         </div>
 
         {/* Form: space-y-3 orqali elementlar orasi yaqinlashtirildi */}
         <form onSubmit={handleSubmit} className="space-y-3">
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="text-[10px] font-bold text-gray-400 uppercase ml-1">Name</label>
+              <label className="text-[10px] font-bold text-gray-400 uppercase ml-1">Ism</label>
               <input 
                 name="name"
-                placeholder="Ali" 
+                placeholder="Masalan: Ali"
                 type="text" 
                 value={formData.name}
                 onChange={handleChange}
@@ -103,7 +104,7 @@ Create Account</h1>
             <label className="text-[10px] font-bold text-gray-400 uppercase ml-1">Email</label>
             <input 
               name="email"
-              placeholder="example@mail.com" 
+              placeholder="Masalan: example@mail.com"
               type="email" 
               value={formData.email}
               onChange={handleChange}
@@ -113,7 +114,7 @@ Create Account</h1>
           </div>
 
           <div>
-            <label className="text-[10px] font-bold text-gray-400 uppercase ml-1">Password</label>
+            <label className="text-[10px] font-bold text-gray-400 uppercase ml-1">Parol</label>
             <input 
               name="password"
               placeholder="••••••••" 
@@ -125,7 +126,7 @@ Create Account</h1>
             />
           </div>
           <button type="button" onClick={handleGoogleSignIn} className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 rounded-xl shadow-md transition-all transform active:scale-[0.98] mt-2 text-sm">
-            Google bilan ro&apos;yxatdan o&apos;tish
+            Google orqali ro&apos;yxatdan o&apos;tish
           </button>
           <button type="submit" className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl shadow-md transition-all transform active:scale-[0.98] mt-2 text-sm">
             Ro&apos;yxatdan o&apos;tish
@@ -135,13 +136,13 @@ Create Account</h1>
         {/* Pastki qism: ixchamroq ko'rinishga keltirildi */}
         <div className="mt-5 pt-4 border-t border-gray-50 flex items-center justify-between gap-2">
           <span className="text-red-500">
-            Have you registered before?
+            Hisobingiz bormi?
           </span>
           <button 
             onClick={onSignInClick}
             className="text-xs font-bold text-blue-500 hover:text-emerald-700 transition-colors uppercase tracking-wider"
           >
-            Sign-In
+            Kirish
           </button>
         </div>
 

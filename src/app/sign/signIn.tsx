@@ -36,7 +36,7 @@ const SignIn = ({ onSignUpClick }: SignInProps) => {
   };
 
   const handleGoogleSignIn = async () => {
-    console.log('Google sign-in started...');
+    console.log('Google orqali kirish boshlandi...');
     
     try {
       const { data, error } = await supabase.auth.signInWithOAuth({
@@ -50,14 +50,14 @@ const SignIn = ({ onSignUpClick }: SignInProps) => {
       
       if (error) {
         console.error('Google OAuth error:', error);
-        alert("Google bilan kirishda xatolik: " + error.message);
+        alert("Google orqali kirishda xatolik: " + error.message);
       } else {
-        console.log('Redirecting to Google...');
+        console.log("Google sahifasiga yo'naltirilmoqda...");
       }
     } catch (error: unknown) {
       console.error('Google sign-in error:', error);
       const message = error instanceof Error ? error.message : String(error);
-      alert("Google bilan kirishda xatolik: " + message);
+      alert("Google orqali kirishda xatolik: " + message);
     }
   };
 
@@ -78,7 +78,7 @@ const SignIn = ({ onSignUpClick }: SignInProps) => {
             <label className="block text-sm font-medium text-gray-700 mb-1">Email manzilingiz</label>
             <input 
               name="email"
-              placeholder="example@mail.com" 
+              placeholder="Masalan: example@mail.com"
               type="email" 
               value={formData.email}
               onChange={handleChange}
@@ -105,7 +105,7 @@ const SignIn = ({ onSignUpClick }: SignInProps) => {
             onClick={handleGoogleSignIn}
             className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-lg shadow-md hover:shadow-lg transition-all active:scale-[0.98] mt-4"
           >
-            Google bilan kirish
+            Google orqali kirish
           </button>
 
           <button type="submit" className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-lg shadow-md hover:shadow-lg transition-all active:scale-[0.98] mt-4">

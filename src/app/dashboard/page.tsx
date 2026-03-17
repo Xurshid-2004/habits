@@ -97,8 +97,8 @@ const Dashboard = () => {
   };
 
   const getPill = (status: HabitStatus) => {
-    if (status === "success") return { label: "Success", cls: "bg-emerald-500/15 text-emerald-200 border-emerald-400/30" };
-    if (status === "in_progress") return { label: "In progress", cls: "bg-amber-500/15 text-amber-200 border-amber-400/30" };
+    if (status === "success") return { label: "Bajarildi", cls: "bg-emerald-500/15 text-emerald-200 border-emerald-400/30" };
+    if (status === "in_progress") return { label: "Jarayonda", cls: "bg-amber-500/15 text-amber-200 border-amber-400/30" };
     return { label: "Bajarilmadi", cls: "bg-white/5 text-zinc-300 border-white/10" };
   };
 
@@ -167,7 +167,7 @@ const Dashboard = () => {
                     : "bg-black/35 border-white/10 text-zinc-200 hover:border-white/20"
                 }`}
               >
-                In progress
+                Jarayonda
               </button>
               <button
                 type="button"
@@ -178,14 +178,14 @@ const Dashboard = () => {
                     : "bg-black/35 border-white/10 text-zinc-200 hover:border-white/20"
                 }`}
               >
-                Success
+                Bajarildi
               </button>
             </div>
           </div>
         ))}
 
         {!loading && selected.length === 0 && (
-          <p className="text-zinc-500 col-span-2">Hali odat tanlanmagan. Habits sahifasidan card tanlang.</p>
+          <p className="text-zinc-500 col-span-2">Hali odat tanlanmagan. Odatlar sahifasidan card tanlang.</p>
         )}
       </div>
 

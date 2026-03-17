@@ -76,12 +76,12 @@ export default function StatisticsPage() {
     <div className="min-h-[calc(100vh-64px)] text-white">
       <div className="flex items-end justify-between gap-4">
         <div>
-          <h1 className="text-2xl md:text-3xl font-bold tracking-tight">Statistics</h1>
-          <p className="text-zinc-500 text-sm mt-1">Bajarilgan odatlar statistikasi.</p>
+          <h1 className="text-2xl md:text-3xl font-bold tracking-tight">Statistika</h1>
+          <p className="text-zinc-500 text-sm mt-1">Odatlar bo‘yicha natijalar.</p>
         </div>
         <div className="hidden md:flex items-center gap-2 text-zinc-400">
           <BarChart3 size={18} />
-          <span className="text-sm">Live</span>
+          <span className="text-sm">Jonli</span>
         </div>
       </div>
 
@@ -111,12 +111,12 @@ export default function StatisticsPage() {
         <div className="rounded-2xl border border-white/10 bg-white/5 p-5 md:col-span-2">
           <div className="flex items-center justify-between">
             <div>
-              <div className="text-xs text-zinc-500 font-bold tracking-widest uppercase">7 kunlik overview</div>
-              <div className="text-sm text-zinc-400 mt-1">Success / In progress / Bajarilmadi</div>
+              <div className="text-xs text-zinc-500 font-bold tracking-widest uppercase">7 kunlik ko‘rinish</div>
+              <div className="text-sm text-zinc-400 mt-1">Bajarildi / Jarayonda / Bajarilmadi</div>
             </div>
             <div className="hidden md:flex items-center gap-2 text-zinc-400">
               <TrendingUp size={18} />
-              <span className="text-sm">Trend</span>
+              <span className="text-sm">O‘sish</span>
             </div>
           </div>
 
@@ -141,14 +141,14 @@ export default function StatisticsPage() {
           </div>
 
           <div className="mt-4 flex flex-wrap gap-3 text-xs text-zinc-300">
-            <span className="inline-flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-emerald-400" /> Success</span>
-            <span className="inline-flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-amber-400" /> In progress</span>
+            <span className="inline-flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-emerald-400" /> Bajarildi</span>
+            <span className="inline-flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-amber-400" /> Jarayonda</span>
             <span className="inline-flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-white/20" /> Bajarilmadi</span>
           </div>
         </div>
 
         <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-          <div className="text-xs text-zinc-500 font-bold tracking-widest uppercase">Success rate</div>
+          <div className="text-xs text-zinc-500 font-bold tracking-widest uppercase">Bajarish foizi</div>
           <div className="mt-4 flex items-center gap-4">
             <div className="relative h-28 w-28">
               <svg className="h-28 w-28 -rotate-90" viewBox="0 0 100 100">
@@ -173,17 +173,17 @@ export default function StatisticsPage() {
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="text-center">
                   <div className="text-2xl font-black">{loading ? "…" : `${percent}%`}</div>
-                  <div className="text-[10px] text-zinc-500 font-bold tracking-widest uppercase">success</div>
+                  <div className="text-[10px] text-zinc-500 font-bold tracking-widest uppercase">bajarildi</div>
                 </div>
               </div>
             </div>
             <div className="flex-1 space-y-2">
               <div className="flex items-center justify-between text-sm">
-                <span className="text-emerald-200">Success</span>
+                <span className="text-emerald-200">Bajarildi</span>
                 <span className="font-bold">{loading ? "…" : success}</span>
               </div>
               <div className="flex items-center justify-between text-sm">
-                <span className="text-amber-200">In progress</span>
+                <span className="text-amber-200">Jarayonda</span>
                 <span className="font-bold">{loading ? "…" : inProgress}</span>
               </div>
               <div className="flex items-center justify-between text-sm">
@@ -192,7 +192,7 @@ export default function StatisticsPage() {
               </div>
               <div className="h-px bg-white/10 my-2" />
               <div className="flex items-center justify-between text-sm">
-                <span className="text-zinc-400">Total</span>
+                <span className="text-zinc-400">Jami</span>
                 <span className="font-bold">{loading ? "…" : total}</span>
               </div>
             </div>

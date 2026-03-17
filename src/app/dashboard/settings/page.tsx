@@ -27,7 +27,7 @@ export default function SettingsPage() {
   return (
     <div className="min-h-[calc(100vh-64px)] text-white">
       <div className="max-w-3xl">
-        <h1 className="text-2xl md:text-3xl font-bold tracking-tight">Settings</h1>
+        <h1 className="text-2xl md:text-3xl font-bold tracking-tight">Sozlamalar</h1>
         <p className="text-zinc-500 text-sm mt-1">Ilova sozlamalari va xavfsizlik.</p>
 
         <div className="mt-6 grid grid-cols-1 gap-4">
@@ -38,7 +38,7 @@ export default function SettingsPage() {
                   <Moon size={18} className="text-zinc-200" />
                 </div>
                 <div>
-                  <div className="font-semibold">Dark mode</div>
+                  <div className="font-semibold">Tungi rejim</div>
                   <div className="text-zinc-500 text-sm">Ko‘zga yoqimli qorong‘i dizayn.</div>
                 </div>
               </div>
@@ -65,7 +65,7 @@ export default function SettingsPage() {
                   <Bell size={18} className="text-zinc-200" />
                 </div>
                 <div>
-                  <div className="font-semibold">Notifications</div>
+                  <div className="font-semibold">Eslatmalar</div>
                   <div className="text-zinc-500 text-sm">Eslatmalar (keyin push/email ulaymiz).</div>
                 </div>
               </div>
@@ -91,7 +91,7 @@ export default function SettingsPage() {
                 <Shield size={18} className="text-zinc-200" />
               </div>
               <div>
-                <div className="font-semibold">Security</div>
+                <div className="font-semibold">Xavfsizlik</div>
                 <div className="text-zinc-500 text-sm">Auth Supabase orqali ishlaydi.</div>
               </div>
             </div>
@@ -113,7 +113,7 @@ export default function SettingsPage() {
               className="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-red-600 hover:bg-red-500 font-semibold shadow-lg shadow-red-600/20"
             >
               <LogOut size={18} />
-              Chiqish (Sign out)
+              Chiqish
             </button>
           </div>
         </div>

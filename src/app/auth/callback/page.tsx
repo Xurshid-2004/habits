@@ -73,7 +73,7 @@ export default function AuthCallback() {
         }
 
         if (session) {
-          console.log('✅ Success! User authenticated:', session.user.email);
+          console.log('✅ Muvaffaqiyatli! Foydalanuvchi kirdi:', session.user.email);
           console.log('🎉 Redirecting to main page...');
           
           // Muvaffaqiyatli autentifikatsiya - asosiy sahifaga o'tish
@@ -100,7 +100,7 @@ export default function AuthCallback() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
       <div className="text-center">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-        <p className="text-gray-600 mb-2">Google bilan autentifikatsiya tekshirilmoqda...</p>
+        <p className="text-gray-600 mb-2">Google orqali kirish tekshirilmoqda...</p>
         <p className="text-gray-400 text-sm">Iltimos, kuting...</p>
         <div className="mt-4 p-4 bg-white rounded-lg shadow-sm max-w-md mx-auto">
           <p className="text-xs text-gray-500">Debug info: Console loglarini tekshiring (F12)</p>
