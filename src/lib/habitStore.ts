@@ -37,7 +37,13 @@ export async function getSelectedHabitIds(userId: string): Promise<number[]> {
     return [];
   }
 
-  return (data || []).map((r: { habit_id: number }) => r.habit_id);
+  const ids: number[] = [];
+  for (const row of data || []) {
+    const raw = (row as { habit_id?: unknown }).habit_id;
+    const n = Number(String(raw));
+    if (Number.isFinite(n)) ids.push(n);
+  }
+  return ids;
 }
 
 export async function setHabitSelected(userId: string, habitId: number, selected: boolean) {
@@ -245,4 +251,3 @@ export async function getDailyStatusSeries(userId: string, days: number) {
 
   return Object.entries(byDay).map(([date, v]) => ({ date, ...v }));
 }
-
