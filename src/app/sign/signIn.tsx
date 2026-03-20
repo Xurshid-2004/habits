@@ -1,128 +1,126 @@
-import React, { useState } from 'react';
-import { useAuth } from '@/contexts/AuthContext';
-import { supabase } from '@/lib/supabase';
+"use client";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/contexts/AuthContext";
+import { supabase } from "@/lib/supabase";
+import { Loader2, Mail, Lock, Eye, EyeOff } from "lucide-react";
 
 interface SignInProps {
   onSignUpClick: () => void;
 }
 
-const SignIn = ({ onSignUpClick }: SignInProps) => {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: ''
-  });
+export default function SignIn({ onSignUpClick }: SignInProps) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPass, setShowPass] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const { signIn } = useAuth();
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError("");
+    setLoading(true);
     try {
-      const success = await signIn(formData.email, formData.password);
-      if (success) {
-        alert("Muvaffaqiyatli kirdingiz!");
+      const ok = await signIn(email, password);
+      if (ok) {
+        router.replace("/");
       } else {
-        alert("Email yoki parol noto'g'ri");
+        setError("Email yoki parol noto'g'ri.");
       }
-    } catch (error: unknown) {
-      const message = error instanceof Error ? error.message : String(error);
-      alert("Xatolik: " + message);
+    } catch {
+      setError("Kirish jarayonida xatolik yuz berdi.");
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
+  const handleGoogle = async () => {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: { redirectTo: `${window.location.origin}/auth/callback` },
     });
-  };
-
-  const handleGoogleSignIn = async () => {
-    console.log('Google orqali kirish boshlandi...');
-    
-    try {
-      const { data, error } = await supabase.auth.signInWithOAuth({
-        provider: 'google',
-        options: {
-          redirectTo: `${window.location.origin}/callback`,
-        }
-      });
-      
-      console.log('OAuth response:', { data, error });
-      
-      if (error) {
-        console.error('Google OAuth error:', error);
-        alert("Google orqali kirishda xatolik: " + error.message);
-      } else {
-        console.log("Google sahifasiga yo'naltirilmoqda...");
-      }
-    } catch (error: unknown) {
-      console.error('Google sign-in error:', error);
-      const message = error instanceof Error ? error.message : String(error);
-      alert("Google orqali kirishda xatolik: " + message);
-    }
+    if (error) setError(error.message);
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
-      {/* Karta konteyneri */}
-      <div className="w-full max-w-[400px] bg-white rounded-2xl shadow-xl p-8 transition-all hover:shadow-2xl">
-        
-        {/* Sarlavha */}
+    <div className="min-h-screen flex items-center justify-center bg-[#0a0a0f] p-4">
+      {/* Background glow */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-blue-600/8 rounded-full blur-3xl" />
+      </div>
+
+      <div className="relative w-full max-w-md">
+        {/* Logo */}
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-800">Xush kelibsiz</h1>
-          <p className="text-gray-500 mt-2">Tizimga kirish uchun ma’lumotlarni kiriting</p>
+          <div className="inline-flex items-center justify-center w-14 h-14 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl mb-4 shadow-2xl shadow-blue-500/25">
+            <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <h1 className="text-2xl font-black text-white tracking-tight">SmartHabit</h1>
+          <p className="text-zinc-500 text-sm mt-1">Hisobingizga kiring</p>
         </div>
 
-        {/* Form qismi */}
-        <form onSubmit={handleSubmit} className="space-y-5">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Email manzilingiz</label>
-            <input 
-              name="email"
-              placeholder="Masalan: example@mail.com"
-              type="email" 
-              value={formData.email}
-              onChange={handleChange}
-              className="w-full px-4 py-3 rounded-lg border border-gray-200 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition-all"
-              required
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Parol</label>
-            <input 
-              name="password"
-              placeholder="••••••••" 
-              type="password" 
-              value={formData.password}
-              onChange={handleChange}
-              className="w-full px-4 py-3 rounded-lg border border-gray-200 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition-all"
-              required
-            />
-          </div>
-
-          <button 
-            type="button"
-            onClick={handleGoogleSignIn}
-            className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-lg shadow-md hover:shadow-lg transition-all active:scale-[0.98] mt-4"
-          >
+        <div className="bg-zinc-900/80 backdrop-blur-xl border border-white/8 rounded-3xl p-7 shadow-2xl">
+          {/* Google button */}
+          <button type="button" onClick={handleGoogle}
+            className="w-full flex items-center justify-center gap-3 py-3 bg-white hover:bg-zinc-100 text-zinc-800 font-semibold rounded-2xl transition-all active:scale-[0.98] mb-5 shadow-lg text-sm">
+            <svg className="w-4 h-4" viewBox="0 0 24 24">
+              <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+              <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+              <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+              <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+            </svg>
             Google orqali kirish
           </button>
 
-          <button type="submit" className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-lg shadow-md hover:shadow-lg transition-all active:scale-[0.98] mt-4">
-            Kirish
-          </button>
-        </form>
+          <div className="flex items-center gap-3 mb-5">
+            <div className="flex-1 h-px bg-white/8" />
+            <span className="text-[11px] text-zinc-600 font-bold uppercase tracking-wider">yoki</span>
+            <div className="flex-1 h-px bg-white/8" />
+          </div>
 
-        {/* Pastki qism */}
-        <div className="mt-8 text-center">
-          <p className="text-sm text-gray-600">
-            Hisobingiz yo&apos;qmi? <span onClick={onSignUpClick} className="text-indigo-600 font-semibold cursor-pointer hover:underline">Ro&apos;yxatdan o&apos;ting</span>
+          {error && (
+            <div className="mb-4 p-3 bg-red-500/10 border border-red-500/25 rounded-2xl text-red-400 text-sm text-center">
+              {error}
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit} className="space-y-3">
+            <div className="relative">
+              <Mail size={15} className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-600" />
+              <input type="email" value={email} onChange={(e) => setEmail(e.target.value)}
+                placeholder="Email manzil"
+                className="w-full bg-zinc-800/60 border border-white/8 text-white placeholder:text-zinc-600 rounded-2xl pl-11 pr-4 py-3.5 text-sm outline-none focus:border-blue-500/50 focus:bg-zinc-800 transition-all"
+                required />
+            </div>
+            <div className="relative">
+              <Lock size={15} className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-600" />
+              <input type={showPass ? "text" : "password"} value={password} onChange={(e) => setPassword(e.target.value)}
+                placeholder="Parol"
+                className="w-full bg-zinc-800/60 border border-white/8 text-white placeholder:text-zinc-600 rounded-2xl pl-11 pr-12 py-3.5 text-sm outline-none focus:border-blue-500/50 transition-all"
+                required />
+              <button type="button" onClick={() => setShowPass(!showPass)}
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-600 hover:text-zinc-400 transition-colors">
+                {showPass ? <EyeOff size={15} /> : <Eye size={15} />}
+              </button>
+            </div>
+            <button type="submit" disabled={loading}
+              className="w-full py-3.5 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 disabled:opacity-60 text-white font-bold rounded-2xl transition-all active:scale-[0.98] shadow-lg shadow-blue-500/20 flex items-center justify-center gap-2 text-sm mt-1">
+              {loading ? <><Loader2 size={16} className="animate-spin" />Kirish...</> : "Kirish"}
+            </button>
+          </form>
+
+          <p className="text-center text-sm text-zinc-600 mt-5">
+            Hisob yo&apos;qmi?{" "}
+            <button onClick={onSignUpClick} className="text-blue-400 hover:text-blue-300 font-semibold transition-colors">
+              Ro&apos;yxatdan o&apos;ting
+            </button>
           </p>
         </div>
-
       </div>
     </div>
   );
 }
-
-export default SignIn;

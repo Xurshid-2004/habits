@@ -1,30 +1,30 @@
-import { NextRequest, NextResponse } from "next/server";
+import { createServerClient, type CookieOptions } from '@supabase/ssr'
+import { cookies } from 'next/headers'
+import { NextResponse } from 'next/server'
 
-export async function POST(req: NextRequest) {
-  try {
-    const { messages, system } = await req.json();
+export async function GET(request: Request) {
+  const { searchParams, origin } = new URL(request.url)
+  const code = searchParams.get('code')
 
-    const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${process.env.GROQ_API_KEY}`,
-      },
-      body: JSON.stringify({
-        model: "llama-3.1-8b-instant",
-        messages: [
-          { role: "system", content: system },
-          ...messages,
-        ],
-        max_tokens: 1000,
-        temperature: 0.7,
-      }),
-    });
-
-    const data = await response.json();
-    const text = (data as any)?.choices?.[0]?.message?.content ?? "Javob kelmadi.";
-    return NextResponse.json({ text });
-  } catch (error) {
-    return NextResponse.json({ error: "Server xatoligi" }, { status: 500 });
+  if (code) {
+    const cookieStore = await cookies()
+    const supabase = createServerClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      {
+        cookies: {
+          get(name: string) { return cookieStore.get(name)?.value },
+          set(name: string, value: string, options: CookieOptions) { cookieStore.set({ name, value, ...options }) },
+          remove(name: string, options: CookieOptions) { cookieStore.set({ name, value: '', ...options, maxAge: 0 }) },
+        },
+      }
+    )
+    const { error } = await supabase.auth.exchangeCodeForSession(code)
+    if (!error) {
+      // Muvaffaqiyatli — Permission flow uchun / ga yuborish
+      return NextResponse.redirect(`${origin}/`)
+    }
   }
+
+  return NextResponse.redirect(`${origin}/`)
 }
